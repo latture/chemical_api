@@ -57,7 +57,7 @@ Building and Configuration
 --------------------------
 A `docker-compose.yml` file is provided to easily run the application.
 Before running make sure [Docker](https://www.docker.com/) is installed on your machine.
-To start the application, first clone the repository (`git clone ...`).
+To start the application, first clone the repository (`git clone https://github.com/latture/chemical_api.git`).
 Then define the port we want the application to listen on as well as the admin username and password.
 
 This is done using a `.env` file.
