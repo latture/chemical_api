@@ -38,12 +38,6 @@ chemicals = {
     # 'title' tag used in item links.
     'item_title': 'chemical',
 
-    # Allows requests at '/chemicals/<formula>/' in addition to '/chemicals/<ObjectId>/'.
-    # 'additional_lookup': {
-    #     'url': 'regex("[\w]+")',
-    #     'field': 'formula'
-    # },
-
     'transparent_schema_rules': True,
 
     'description': 'A store of chemical data.',
