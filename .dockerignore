@@ -1,0 +1,14 @@
+.DS_Store
+.dockerignore
+Dockerfile
+docker-compose.yml
+dev-requirements.txt
+.env
+.git
+*.gitignore
+Procfile*
+
+__pycache__
+client/
+reformat-data/
+tests/
