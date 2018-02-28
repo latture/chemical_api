@@ -5,7 +5,7 @@ The API is written in Python and is built using [Eve](http://python-eve.org/) (a
 Files are served using [NGINX](https://www.nginx.com/), and the WSGI is provided by [uWSGI](https://uwsgi-docs.readthedocs.io/).
 The API provides public `GET` access. 
 All other methods require valid authorization.
-POSTs to the database are verified using [Cerberus](http://docs.python-cerberus.org/).
+`POST`s to the database are verified using [Cerberus](http://docs.python-cerberus.org/).
 A demo of the application is hosted on [AWS](http://ec2-13-57-9-7.us-west-1.compute.amazonaws.com:5000/chemicals).
 
 Each entry in the chemical database holds information of the chemical formula, band gap and color if the form of key, value pairs, i.e.:
