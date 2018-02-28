@@ -3,7 +3,7 @@
 """
     Settings
     ~~~~~~~~
-    This file contains the settings require to setup the REST API that will allow us to query the chemicals database.
+    This file contains the settings required to setup the REST API that will allow us to query the chemicals database.
 
     :copyright: (c) 2018 by Ryan Latture.
     :license: MIT, see LICENSE for more details.
