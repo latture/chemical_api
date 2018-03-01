@@ -37,7 +37,7 @@ To find all compounds where `0 < band_gap < 3`:
 http://localhost:5000/chemicals?where={"$and":[{"band_gap":{"$gt":0.0}},{"band_gap":{"$lt":3.0}}]}
 ```
 
-To find all compounds that contain Gallium:
+To find all compounds that contain gallium:
 
 ```txt
 http://localhost:5000/chemicals?where={"formula":{"$regex":"Ga"}}
@@ -49,7 +49,7 @@ Or to find all compounds that contain gallium and that have a band gap between 0
 http://localhost:5000/chemicals?where={"$and":[{"formula":{"$regex":"Ga"}},{"band_gap":{"$gt":0.0}},{"band_gap":{"$lt":3.0}}]}
 ```
 
-A sample client that implements these examples and also shows how to POST new chemicals to the database is provided in the `client` folder of this repository. 
+A sample client that implements these examples and also shows how to `POST` new chemicals to the database is provided in the `client` folder of this repository. 
 To run those examples install the requirements (`pip install -r client/requirements.txt`), start the server (see the next section) and run the script (`python client/client.py`). 
 
 
