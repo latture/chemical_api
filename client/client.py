@@ -7,8 +7,9 @@
     :license: MIT, see LICENSE for more details.
 """
 import json
-import requests
 import os
+import warnings
+import requests
 
 
 def endpoint(resource, ip='0.0.0.0', port=5000):
@@ -89,32 +90,114 @@ def get_total(response):
     return response.json()['_meta']['total']
 
 
-def query_by_band_gap(min_band_gap=None, max_band_gap=None):
+def format_single_query(query):
     """
-    Find all chemicals with a band gap witin the specified range.
+    Formats the query parameters from a single query.
+
+    Parameters
+    ----------
+    query : str
+        MongoDB-stype query.
+    
+    Returns
+    -------
+    str
+        Query parameters.
+    """
+    return f'?where={query}' 
+
+
+def combine_queries(queries):
+    """
+    Creates a set of query parameters that evaluate to ``True`` if individual queries are satified.
+
+    Parameters
+    ----------
+    queries : List[str]
+        List of MongoDB-style queries.
+    
+    Returns
+    -------
+    str
+        Combined query.
+    """
+    if not queries:
+        warnings.warn('Attempted to combined queries, but none were provided.')
+        return ''
+
+    if len(queries) == 1:
+        return format_single_query(queries[0])
+
+    comma_sep_queries = ','.join(queries)
+    return f'?where={{"$and":[{comma_sep_queries}]}}'
+
+
+def create_band_gap_queries(min_band_gap=None, max_band_gap=None):
+    """
+    Creates the queries to find all chemicals with a band gap within the given range.
 
     Parameters
     ----------
     min_band_gap : float, optional
-        Minimum allowed band gap. Default is ````.
+        Minimum allowed band gap. Default is ``None``.
     max_band_gap : float, optional
-        Maximum allowed band gap. Default is ````.
+        Maximum allowed band gap. Default is ``None``.
+    
+    Returns
+    -------
+    List[str]
+        List of queries.
     """
     if min_band_gap is None and max_band_gap is None:
-        warnings.warn("No bounds provided for band gap.")
-    if min_band_gap is None:
-        min_band_gap = None
-    if max_band_gap is None:
-        max_band_gap = Nonee
+        warnings.warn('No bounds provided for band gap.')
+        return None
 
     key = 'band_gap'
-    min_band_gap_query = format_mongo_query(key, '$gt', min_band_gap)
-    max_band_gap_query = format_mongo_query(key, '$lt', max_band_gap)
-    params = f'?where={{"$and":[{min_band_gap_query},{max_band_gap_query}]}}'
+    if max_band_gap is None:
+       return [format_mongo_query(key, '$gt', min_band_gap)]
+
+    if min_band_gap is None:
+       return [format_mongo_query(key, '$lt', max_band_gap)]
+    
+    min_band_gap_query = format_mongo_query(key, '$gt', min_band_gap) 
+    max_band_gap_query = format_mongo_query(key, '$lt', max_band_gap) 
+    return [min_band_gap_query, max_band_gap_query]
+
+
+def query_by_band_gap(min_band_gap=None, max_band_gap=None):
+    """
+    Find all chemicals with a band gap within the specified range.
+
+    Parameters
+    ----------
+    min_band_gap : float, optional
+        Minimum allowed band gap. Default is ``None``.
+    max_band_gap : float, optional
+        Maximum allowed band gap. Default is ``None``.
+    """
+    queries = create_band_gap_queries(min_band_gap=min_band_gap, max_band_gap=max_band_gap)
+    params = combine_queries(queries)
     url = endpoint('chemicals') + params
     r = requests.get(url)
     total_matches = get_total(r)
-    print(f'Found {total_matches} items with a band gap between {min_band_gap:.1f} and {max_band_gap:.1f}.')
+    print(f'Found {total_matches} items with a band gap between {min_band_gap} and {max_band_gap}.')
+
+
+def create_formula_query(element):
+    """
+    Creates a query that evaluates to ``True`` when the chemical formula contains the given element.
+
+    Parameters
+    ----------
+    element : str
+        Element to search for.
+    
+    Returns
+    -------
+    str
+        MongoDB-syle query.
+    """
+    return format_mongo_query('formula', '$regex', f'\"{element}\"')
 
 
 def query_by_element(element):
@@ -126,8 +209,8 @@ def query_by_element(element):
     element: str
         Element to search for in each formula.
     """
-    formula_query = format_mongo_query('formula', '$regex', f'\"{element}\"')
-    params = f'?where={formula_query}'
+    formula_query = create_formula_query(element)
+    params = format_single_query(formula_query)
     url = endpoint('chemicals') + params
     r = requests.get(url)
     total_matches = get_total(r)
@@ -141,23 +224,16 @@ def query_by_element_and_band_gap(element, min_band_gap, max_band_gap):
     Parameters
     ----------
     min_band_gap : float, optional
-        Minimum allowed band gap. Default is ````.
+        Minimum allowed band gap. Default is ``None``.
     max_band_gap : float, optional
-        Maximum allowed band gap. Default is ````.
+        Maximum allowed band gap. Default is ``None``.
     element: str
         Element to search for in each formula.
     """
-    if min_band_gap is None and max_band_gap is None:
-        warnings.warn("No bounds provided for band gap.")
-    if min_band_gap is None:
-        min_band_gap = None
-    if max_band_gap is None:
-        max_band_gap = None
-
-    min_band_gap_query = format_mongo_query('band_gap', '$gt', min_band_gap)
-    max_band_gap_query = format_mongo_query('band_gap', '$lt', max_band_gap)
-    formula_query = format_mongo_query('formula', '$regex', f'\"{element}\"')
-    params = f'?where={{"$and":[{formula_query},{min_band_gap_query},{max_band_gap_query}]}}'
+    band_gap_queries = create_band_gap_queries(min_band_gap=min_band_gap, max_band_gap=max_band_gap)
+    formula_query = create_formula_query(element)
+    all_queries = band_gap_queries + [formula_query]
+    params = combine_queries(all_queries)
     url = endpoint('chemicals') + params
     r = requests.get(url)
     total_matches = get_total(r)
