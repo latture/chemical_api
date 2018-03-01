@@ -2,7 +2,7 @@ Chemical API
 ============
 This project implements a REST API to query a database of chemical data.
 The API is written in Python and is built using [Eve](http://python-eve.org/) (a REST API framework based on [Flask](http://flask.pocoo.org/) and [MongoDB](https://www.mongodb.com/)).
-Files are served using [NGINX](https://www.nginx.com/), and the WSGI is provided by [uWSGI](https://uwsgi-docs.readthedocs.io/).
+Files are served using [NGINX](https://www.nginx.com/), and the web server gateway interface (WSGI) is provided by [uWSGI](https://uwsgi-docs.readthedocs.io/).
 The API provides public `GET` access. 
 All other methods require valid authorization.
 `POST`s to the database are verified using [Cerberus](http://docs.python-cerberus.org/).
