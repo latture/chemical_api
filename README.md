@@ -27,10 +27,20 @@ http://localhost:5000/chemicals?where={"band_gap":{"$lt":3.0}}
 
 Python syntax also works:
 ```txt
-http://localhost:5000/chemicals?where="band_gap"<3
+http://localhost:5000/chemicals?where=band_gap<3
 ```
 
-More complex queries are also possible.
+To sort the results by band gap:
+```txt
+http://localhost:5000/chemicals?where=band_gap<3&sort=[("band_gap",-1)]
+```
+
+Pagination is also supported
+```txt
+http://localhost:5000/chemicals?where=band_gap<3&max_results=10&page=2
+```
+
+More complex queries are possible.
 To find all compounds where `0 < band_gap < 3`:
 
 ```txt
