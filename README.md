@@ -50,7 +50,8 @@ http://localhost:5000/chemicals?where={"$and":[{"formula":{"$regex":"Ga"}},{"ban
 ```
 
 A sample client that implements these examples and also shows how to `POST` new chemicals to the database is provided in the `client` folder of this repository. 
-To run those examples install the requirements (`pip install -r client/requirements.txt`), start the server (see the next section) and run the script (`python client/client.py`). 
+To run those examples install the requirements (`pip install -r client/requirements.txt`), start the server (see the next section) and run the script (`python client/client.py`).
+Note, the client requires Python 3.6, so make sure you're running the latest version. 
 
 
 Building and Configuration
