@@ -18,9 +18,9 @@ def endpoint(resource, ip='0.0.0.0', port=5000):
 
     Parameters
     ----------
-    resource : string
+    resource : str
       Resource to access.
-    ip : string, optional
+    ip : str, optional
       IP address of the serer. Default is ``'0.0.0.0'``
     port : int, optional
       Port the server is listening on. Default is ``5000``
@@ -34,13 +34,13 @@ def perform_post(resource, data, username, password):
 
     Parameters
     ----------
-    resource : string
+    resource : str
       Name of the resource/collection.
     data : dict
       Data to post.
-    username : string
+    username : str
       Valid username required to access resource.
-    password : string
+    password : str
       Valid password required to access resource.
     
     Returns
