@@ -42,6 +42,7 @@ app.config['SWAGGER_INFO'] = {
     },
     'license': {
         'name': 'MIT',
+        'url': 'https://github.com/latture/chemical_api/blob/master/LICENSE'
     },
     'schemes': ['http', 'https'],
 }
