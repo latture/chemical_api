@@ -270,7 +270,7 @@ if __name__ == '__main__':
         'color': 'Green'
     }
     username = os.environ.get('ADMIN_USERNAME', 'admin')
-    password = os.environ.get('ADMIN_PASSWORD', 'secret')
+    password = os.environ.get('ADMIN_PASSWORD', 'admin')
 
     query_by_band_gap(min_band_gap, max_band_gap)
     query_by_element(element)
