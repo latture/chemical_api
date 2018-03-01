@@ -255,9 +255,9 @@ def post_chemical(chemical, username, password):
     """
     r = perform_post('chemicals', json.dumps(new_chemical), username, password)
     if r.status_code == requests.codes.created:
-        print("POST of {} successfull.".format(new_chemical['formula']))
+        print("POST of {} successful.".format(new_chemical['formula']))
     else:
-        print("Error posting data. request returned code {}".format(r.status_code))
+        print("Error posting data. Request returned code {}".format(r.status_code))
 
 
 if __name__ == '__main__':
