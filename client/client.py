@@ -243,6 +243,15 @@ def query_by_element_and_band_gap(element, min_band_gap, max_band_gap):
 def post_chemical(chemical, username, password):
     """
     Add a chemical to the database and print the response.
+
+    Parameters
+    ----------
+    chemical: dict
+        New chemical to post.
+    username: str
+        Valid username for the administrator.
+    password: str
+        Valid password for the administrator.
     """
     r = perform_post('chemicals', json.dumps(new_chemical), username, password)
     if r.status_code == requests.codes.created:
