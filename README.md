@@ -109,7 +109,7 @@ For convenience, the JSON output is provided in this repo (`mongo-seed/data.json
 Unit Tests
 ----------
 Unit tests are provided in the `tests` directory.
-To run them, install the requirements on your machine `pip install -r requirements.txt`.
+To run them, install the development requirements on your machine `pip install -r dev-requirements.txt`.
 You'll also need a running instance of MongoDB.
 To start the database, install [MongoDB](https://docs.mongodb.com/manual/installation) then run `mongod` from the terminal.
 Finally, navigate to this repo's root directory and execute:
