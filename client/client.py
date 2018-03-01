@@ -237,7 +237,7 @@ def query_by_element_and_band_gap(element, min_band_gap, max_band_gap):
     url = endpoint('chemicals') + params
     r = requests.get(url)
     total_matches = get_total(r)
-    print(f'Found {total_matches} items that contain {element} and also have a band gap between {min_band_gap:.1f} and {max_band_gap:.1f}.')
+    print(f'Found {total_matches} items that contain {element} and also have a band gap between {min_band_gap} and {max_band_gap}.')
 
 
 def post_chemical(chemical, username, password):
